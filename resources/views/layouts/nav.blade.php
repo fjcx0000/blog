@@ -3,6 +3,6 @@
         <span class="am-icon-bars"></span></button>
 <div class="am-collapse am-topbar-collapse" id="collapse-head">
   <div class="am-topbar-right">
-    <a href="#" class="am-btn am-btn-primary am-topbar-btn am-btn-sm topbar-link-btn"><span class="am-icon-user"></span> Login</a>
+    <a href="{{ URL::to('login') }}" class="am-btn am-btn-primary am-topbar-btn am-btn-sm topbar-link-btn"><span class="am-icon-user"></span> Login</a>
   </div>
 </div>
