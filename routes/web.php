@@ -54,7 +54,7 @@ Route::get('logout', array('before' => 'auth', function() {
 }));
 
 Route::get('register', function() {
-    return view('create');
+    return view('users.create');
 });
 
 Route::post('register', array('before'=>'csrf', function() {
@@ -78,3 +78,45 @@ Route::post('register', array('before'=>'csrf', function() {
         return Redirect::to('register')->withInput()->withErrors($validator);
     }
 }));
+
+Route::get('user/{id}/edit', array('before' => 'auth', 'as' => 'user.edit', function($id)
+{
+    if (Auth::user()->is_admin or Auth::id() == $id) {
+        return view('users.edit')->with('user', User::find($id));
+    } else {
+        return Redirect::to('/');
+    }
+}));
+
+Route::put('user/{id}', array('before' => 'auth|csrf', function($id)
+{
+    if (Auth::user()->is_admin or (Auth::id() == $id)) {
+        $user = User::find($id);
+        $rules = array(
+            'password' => 'required_with:old_password|min:6|confirmed',
+            'old_password' => 'min:6',
+        );
+        if (!(Request::get('nickname') == $user->nickname))
+        {
+            $rules['nickname'] = 'required|min:4|unique:users,nickname';
+        }
+        $validator = Validator::make(Request::all(), $rules);
+        if ($validator->passes()) {
+            if (!(Request::get('old_password') == '')) {
+                if (!Hash::check(Request::get('old_password'), $user->password)) {
+                    return Redirect::route('user.edit', $id)->with('user', $user)->with('message', array('type' => 'danger', 'content' => 'old password error'));
+                } else {
+                    $user->password = Hash::make(Request::get('password'));
+                }
+            } 
+            $user->nickname = Request::get('nickname');
+            $user->save();
+            return Redirect::route('user.edit', $id)->with('user', $user)->with('message', array('type' => 'success', 'content' => 'Modify Successfully'));
+        } else {
+            return Redirect::route('user.edit', $id)->withInput()->with('user', $user)->withErrors($validator);
+        }
+    } else {
+        return Redirect::to('/');
+    }
+}));
+                        

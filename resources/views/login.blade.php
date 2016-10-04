@@ -4,16 +4,8 @@
 <div class="am-g  am-g-fixed">
     <div class="am-u-lg-6 am-u-md-8">
         <br/>
-        @if (Session::has('message'))
-            <div class="am-alert am-alert-{{ Session::get('message')['type'] }}" data-am-alert>
-                <P>{{ Session::get('message')['content'] }}</p>
-            </div>
-        @endif
-        @if ($errors->count() > 0)
-            <div class="am-alert am-alert-danger" data-am-alert>
-                <p>{{ $errors->first() }}</p>
-            </div>
-        @endif
+        @include('errors.message')
+
         <h3> old field {{ Request::old('email') }} </h3>
         {{ Form::open(array('url' => 'login', 'class' => 'am-form')) }}
             {{ Form::label('email', 'E-mail:') }}
