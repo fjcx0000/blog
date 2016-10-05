@@ -179,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TestServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
 //        'Form' => Illuminate\Html\FormBuilder::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => collective\Html\HtmlFacade::class,
+        'TestService' => App\Facades\TestFacade::class,
 
     ],
 
