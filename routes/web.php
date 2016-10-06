@@ -128,7 +128,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('auth','isAdmin'))
     });
 });
 
-Route::model('user', 'User');
+//Route::model('user', 'User');
 
 Route::group(array('before' => 'auth|csrf|isAdmin'), function() {
     Route::put('user/{user}/reset', function(User $user) {

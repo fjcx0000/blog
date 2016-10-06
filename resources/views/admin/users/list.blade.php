@@ -55,7 +55,7 @@
 <script>
 $(function() {
     $('[id^=reset]').on('click', function() {
-        $('.am-modal-bd').text('Sure you want to reset the password for 123456?);
+        $('.am-modal-bd').text('Sure you want to reset the password for 123456?');
         $('#my-confirm').modal({
             relatedTarget: this,
             onConfirm: function(options) {
@@ -76,7 +76,7 @@ $(function() {
         });
     });
 
-    $('[id^=unblock]').on('click', function() {
+    $('[id^=unlock]').on('click', function() {
         $('.am-modal-bd').text('Sure you want to unlock it?');
         $('#my-confirm').modal({
             relatedTarget: this,
