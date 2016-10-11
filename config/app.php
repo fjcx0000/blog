@@ -180,6 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TestServiceProvider::class,
+        MaxHoffmann\Parsedown\ParsedownServiceProvider::class,
 
     ],
 
@@ -233,6 +234,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => collective\Html\HtmlFacade::class,
         'TestService' => App\Facades\TestFacade::class,
+        'Markdown' => MaxHoffmann\Parsedown\ParsedownFacade::class,
 
     ],
 

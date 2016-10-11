@@ -150,3 +150,10 @@ Route::group(array('before' => 'auth|csrf|isAdmin'), function() {
     });
 });
                         
+Route::post('article/preview', 'ArticleController@preview',['middleware' => 'auth']);
+
+/*
+ * route for articles
+ */
+Route::resource('article', 'ArticleController');
+

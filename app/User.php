@@ -29,4 +29,12 @@ class User extends Authenticatable
     ];
 
     protected $guard = array('email', 'password');
+
+    /**
+     * Get user's articles
+     */
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
 }
