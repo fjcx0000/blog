@@ -11,11 +11,13 @@
 |
 */
 use App\User;
+use App\Article,App\Tag;
 //use TestService;
 
 Route::get('/', function () {
-    //TestService::doSomething();
-    return view('index');
+    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(10);
+    $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
+    return view('index')->with('articles', $articles)->with('tags', $tags);
 });
 Route::get('login', function() {
     return view('login');
