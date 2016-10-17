@@ -15,8 +15,14 @@ use App\Article,App\Tag;
 //use TestService;
 
 Route::get('/', function () {
-    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(10);
+    clock()->startEvent('debugEvent', 'LavavelAcademy.org');
+    clock('Message text.');
+    Logger('Message text.');
+    clock(array('hello' => 'world', 'goodby' => 'yesterday'));
+    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(2);
     $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
+    clock($tags);
+    clock()->endEvent('debugEvent');
     return view('index')->with('articles', $articles)->with('tags', $tags);
 });
 Route::get('login', function() {
@@ -46,10 +52,7 @@ Route::post('login', array('before' => 'csrf', function() {
 }));
 
 Route::get('home', array('before' => 'auth', function() {
-    //var_dump(Request::user());
-    //$user = Request::user();
-    //echo $user->nickname;
-    return view('home')->with('user', Request::user());
+    return view('home')->with('user', Auth::user())->with('articles', Article::with('tags')->where('user_id', '=', Auth::id())->orderBy('created_at', 'desc')->get());
 }));
 
 Route::get('logout', array('before' => 'auth', function() {
@@ -153,9 +156,11 @@ Route::group(array('before' => 'auth|csrf|isAdmin'), function() {
 });
                         
 Route::post('article/preview', 'ArticleController@preview',['middleware' => 'auth']);
+Route::post('article/{id}/preview', 'ArticleController@preview',['middleware' => 'auth']);
 
 /*
  * route for articles
  */
 Route::resource('article', 'ArticleController');
 
+Route::get('user/{user}/articles', 'UserController@articles');

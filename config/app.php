@@ -181,6 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TestServiceProvider::class,
         MaxHoffmann\Parsedown\ParsedownServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 
     ],
 
@@ -235,6 +236,7 @@ return [
         'Html' => collective\Html\HtmlFacade::class,
         'TestService' => App\Facades\TestFacade::class,
         'Markdown' => MaxHoffmann\Parsedown\ParsedownFacade::class,
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
 
     ],
 

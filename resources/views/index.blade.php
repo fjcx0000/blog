@@ -12,7 +12,7 @@
                 <a href="{{ URL::route('article.show', $article->id) }}">{{ $article->title }}</a>
             </h3>
             <h4 class="am-article-meta blog-meta">
-                by <a href="#">{{ $article->user->nickname }}</a> posted on {{ $article->created_at->format('Y/m/d H:i') }} under
+                by <a href="{{ URL::to('user/'.$article->user->id.'/articles') }}">{{ $article->user->nickname }}</a> posted on {{ $article->created_at->format('Y/m/d H:i') }} under
                 @foreach ($article->tags as $tag)
                 <a href="#" style="color: #fff;" class="am-badge am-badge-success am-radius"> {{ $tag->name }}</a>
                 @endforeach
@@ -27,6 +27,7 @@
             </div>
         </article>
         @endforeach
+    {!! $articles->render() !!}
     </div>
 
     <div class="am-u-md-4 blog-sidebar">
@@ -64,4 +65,15 @@
         </div>
     </div>
 </div>
+
+<script> {{-- display pagination inline --}}
+$(function() {
+    $('ul.pagination li').css({
+        "display" : "inline",
+        "list-style-type" : "none",
+        "padding" : "5px",
+    });
+});
+</script>
+
 @stop
