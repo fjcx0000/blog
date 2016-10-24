@@ -22,6 +22,7 @@
                         <a href="{{ URL::to('tag/'.$tag->id.'/edit') }}" class="am-btn am-btn-xs am-btn-primary"><span class="am-icon-pencil"> Edit</span></a>
                         {{ Form::open(array('url' => 'tag/'.$tag->id, 'method' => 'DELETE', 'style' => 'display:inline')) }}
                             <button type="button" class="am-btn am-btn-xs am-btn-danger" id="delete{{ $tag->id }}"><span class="am-icon-remove"> Delete</span></button>
+                        {{ Form::close() }}
                     </td>
                 </tr>
                 @endforeach
@@ -31,24 +32,26 @@
 </div>
 
 <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-    <div class="am-modal-config">
-        <div class="am-modal-bd">
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel> N</span>
-            <span class="am-modal-btn" data-am-modal-confirm> S</span>
+    <div class="am-modal-dialog">
+        <div class="am-modal-config">
+            <div class="am-modal-bd">
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel> No</span>
+                <span class="am-modal-btn" data-am-modal-confirm> Yes</span>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
 $(function () {
-    $('[id=^delete]').on('click', function () {
+    $('[id^=delete]').on('click', function () {
         $('.am-modal-bd').text('Sure you want to delete it?');
         $('#my-confirm').modal({
-            relativeTarget: this,
+            relatedTarget: this,
             onConfirm: function (options) {
-                $(this.relativeTarget).parent().submit();
+                $(this.relatedTarget).parent().submit();
             },
             onCancel: function () {
             }

@@ -19,7 +19,7 @@ Route::get('/', function () {
     clock('Message text.');
     Logger('Message text.');
     clock(array('hello' => 'world', 'goodby' => 'yesterday'));
-    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(2);
+    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(env('PAGINATION_NUMBER', 2));
     $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
     clock($tags);
     clock()->endEvent('debugEvent');
@@ -164,5 +164,10 @@ Route::post('article/{id}/preview', 'ArticleController@preview',['middleware' =>
  * route for articles
  */
 Route::resource('article', 'ArticleController');
-
 Route::get('user/{user}/articles', 'UserController@articles');
+
+/*
+ * route for tags
+ */
+Route::resource('tag', 'TagController');
+Route::get('tag/{id}/articles', 'TagController@articles');

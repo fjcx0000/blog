@@ -204,7 +204,7 @@ class ArticleController extends Controller
     }
 
     /*
-     * Destroy artilce, soft delete
+     * Destroy article, soft delete
      */
     public function destroy($id)
     {

@@ -18,7 +18,9 @@
                         <td><a href="{{ URL::route('article.show', $article->id) }}">{{ $article->title }}</a> </td>
                         <td>
                             @foreach($article->tags as $tag)
-                                <span class="am-badge am-badge-success am-radius">{{ $tag->name }}</span>
+                                <a href="{{ URL::to('tag/'.$tag->id.'/articles') }}">
+                                    <span class="am-badge am-badge-success am-radius">{{ $tag->name }}</span>
+                                </a>
                             @endforeach
                         </td>
                         <td><a href="{{ URL::to('user/' . $article->user->id . '/articles') }}">{{ $article->user->nickname }}</a> </td>
