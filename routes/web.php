@@ -171,3 +171,13 @@ Route::get('user/{user}/articles', 'UserController@articles');
  */
 Route::resource('tag', 'TagController');
 Route::get('tag/{id}/articles', 'TagController@articles');
+
+/**
+ * Route for Athome resource
+ */
+
+Route::resource('athome', 'AthomeController');
+
+Route::get('athome_ajaxtest', function(){
+    return view("athome.ajaxtest");
+});
