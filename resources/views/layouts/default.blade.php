@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <meta charset="UTF-8"/>
-        <title>James Blog</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="format-detection" content="telephone=no"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="Cache-Control" content="no-siteapp"/>
-        <link rel="alternate icon" type="image/x-icon" href="{{ URL::asset('i/favicon.ico') }}"/>
-        <link rel="stylesheet" href="//cdn.amazeui.org/amazeui/2.1.0/css/amazeui.min.css"/>
-        <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" type="text/css"> `
-        <script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//cdn.amazeui.org/amazeui/2.1.0/js/amazeui.min.js"></script>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content="" />
+        <title>@yield('title')</title>
+        <link rel="stylesheet" type="text/css" href="{{ URL::to('css/bootstrap.min.css') }}" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="{{ URL::to('css/bootstrap-select.min.css') }}" />
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// --> <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <script src="{{ URL::to('js/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ URL::to('js/bootstrap.min.js') }}"></script>
     </head>
     <body>
-        <header class="am-topbar am-topbar-fixed-top">
-            <div class="am-container">
-                <h1 class="am-topbar-brand">
-                    <a href="/">ShiYanLou Blog</a>
-                </h1>
-                @include('layouts.nav')
+        <div class="container">
+            <h1>
+                <a href="/">ShiYanLou Blog</a>
+            </h1>
+            @include('layouts.nav')
+            <div id="content" class="row">
+                @yield('main')
             </div>
-        </header>
-
-        @yield('main')
-
-        @include('layouts.footer')
-
+            @include('layouts.footer')
+        </div>
     </body>
 </html>
 

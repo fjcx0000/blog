@@ -1,3 +1,5 @@
-<footer class="footer">
-  <p>? 2015 By <a href="http://www.shiyanlou.com" target="_blank">www.shiyanlou.com</a></p>
+<footer class="footer  navbar-fixed-bottom">
+  <div class="row">
+    <p class="text-center">? 2016 By <a href="http://www.shiyanlou.com" target="_blank">www.shiyanlou.com</a></p>
+  </div>
 </footer>

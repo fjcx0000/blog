@@ -1,34 +1,49 @@
-<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
-        data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">nav switch</span>
-        <span class="am-icon-bars"></span></button>
-<div class="am-collapse am-topbar-collapse" id="collapse-head">
-    @if (Auth::check())
-        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right">
-            @if ( Auth::user()->is_admin)
-                <li class=""><a href="{{ URL::to('admin/users') }}"> Users</a></li>
-                <li class="{{ (isset($page) and ($page == 'articles')) ? 'am-active' : '' }}"><a href="{{ URL::to('admin/articles') }}"> Articles</a></li>
-                <li class="{{ (isset($page) and ($page == 'tags')) ? 'am-active' : '' }}"><a href="{{ URL::to('admin/tags') }}">Tags</a> </li>
-            @endif
-            <li class="am-dropdown" data-am-dropdown>
-                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                <span class="am-icon-briefcase"></span> {{ Request::user()->nickname}} <span class="am-icon-caret-down"></span>
-                </a>
-                <ul class="am-dropdown-content">
-                    <li><a href="{{ URL::to('article/create') }}"><span class="am-icon-edit"></span> Publish Article</a></li>
-                    <li><a href="{{ URL::to('user/'.Auth::id().'/edit') }}"><span class="am-icon-user"></span> Information</a></li>
-                    <li><a href="{{ URL::to('logout') }}"><span class="am-icon-power-off"></span> Exit</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="am-topbar-right">
-            <a href="{{ URL::to('user/'.Auth::id().'/articles') }}" class="am-btn am-btn-primary am-topbar-btn am-btn-sm topbar-link-btn"><span class="am-icon-list"></span> My Article</a>
-        </div>
-    @else
-        <div class="am-topbar-right">
-            <a href="{{ URL::to('register') }}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm topbar-link-btn"><span class="am-icon-pencil"></span>Register</a>
-        </div>
-        <div class="am-topbar-right">
-            <a href="{{ URL::to('login') }}" class="am-btn am-btn-primary am-topbar-btn am-btn-sm topbar-link-btn"><span class="am-icon-user"></span> Login</a>
-        </div>
-    @endif
-</div>
+<nav class="navbar navbar-default">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ URL::to('/') }}">James Blog</a>
+    </div>
+    <div id="navbar-menu" class="collapse navbar-collapse">
+        @if (Auth::check())
+            <ul class="nav navbar-nav">
+                <li><a href="{{ URL::to('home') }}">Home</a></li>
+                @if ( Auth::user()->is_admin )
+                    <li class=""><a href="{{ URL::to('admin/users') }}"> Users</a></li>
+                    <li class="{{ (isset($page) and ($page == 'articles')) ? 'active' : '' }}"><a href="{{ URL::to('admin/articles') }}"> Articles</a></li>
+                    <li class="{{ (isset($page) and ($page == 'tags')) ? 'active' : '' }}"><a href="{{ URL::to('admin/tags') }}">Tags</a> </li>
+                @endif
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a href="{{ URL::to('user/'.Auth::id().'/articles') }}"><span class="glyphicon glyphicon-list-alt"></span> My Article</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-home"></span> {{ Request::user()->nickname}}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ URL::to('article/create') }}"><span class="glyphicon glyphicon-pencil"></span> Publish Article</a></li>
+                        <li><a href="{{ URL::to('user/'.Auth::id().'/edit') }}"><span class="glyphicon glyphicon-user"></span> Information</a></li>
+                        <li><a href="{{ URL::to('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Exit</a></li>
+                    </ul>
+                </li>
+            </ul>
+        @else
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ URL::to('register') }}" ><span class="glyphicon glyphicon-registration-mark"></span>Register</a>
+                </li>
+                <li>
+                    <a href="{{ URL::to('login') }}" ><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
+            </ul>
+        @endif
+    </div>
+</nav>
