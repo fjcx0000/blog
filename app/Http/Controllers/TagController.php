@@ -40,6 +40,7 @@ class TagController extends Controller
         $tag = Tag::find($id);
         $tag->count = 0;
         $tag->save();
+        $tag->delete();
         $arr_article_id = null;
         foreach($tag->articles as $article) {
             $arr_article_id[] = $article->id;

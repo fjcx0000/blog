@@ -212,6 +212,9 @@ class ArticleController extends Controller
         foreach($article->tags as $tag) {
             $tag->count--;
             $tag->save();
+            if ($tag->count == 0) {
+                $tag->delete();
+            }
             $article->tags()->detach($tag->id);
         }
         $article->delete();

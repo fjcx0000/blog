@@ -1,9 +1,8 @@
 @extends("layouts.default")
 
 @section("main")
-    <div class="am-g am-g-fixed blog-g-fixed">
-        <div class="am-u-sm-12">
-            <table class="am-table am-table-hover am-table-striped">
+        <div class="col-sm-12">
+            <table class="table table-hover table-striped">
                 <thread>
                     <tr>
                         <th>Title</th>
@@ -19,15 +18,15 @@
                         <td>
                             @foreach($article->tags as $tag)
                                 <a href="{{ URL::to('tag/'.$tag->id.'/articles') }}">
-                                    <span class="am-badge am-badge-success am-radius">{{ $tag->name }}</span>
+                                    <span class="label label-success label-as-badge">{{ $tag->name }}</span>
                                 </a>
                             @endforeach
                         </td>
                         <td><a href="{{ URL::to('user/' . $article->user->id . '/articles') }}">{{ $article->user->nickname }}</a> </td>
                         <td>
-                            <a href="{{ URL::to('article/' . $article->id . '/edit') }}" class="am-btn am-btn-xs am-btn-primary"><span class="am-icon-pencil"></span> Edit</a>
+                            <a href="{{ URL::to('article/' . $article->id . '/edit') }}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                             {{ Form::open(array('url'=>'article/' . $article->id, 'method' => 'DELETE', 'style' => 'display: inline;')) }}
-                            <button type="button" class="am-btn am-btn-xs am-btn-danger" id="delete{{ $article->id }}"><span class="am-icon-remove"></span> Delete</button>
+                            <button type="button" class="btn btn-danger" id="delete{{ $article->id }}" data-title="{{ $article->title }}"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                             {{ Form::close() }}
                         </td>
                     </tr>
@@ -37,28 +36,6 @@
         </div>
     </div>
 
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-        <div class="am-modal-dialog">
-            <div class="am-modal-bd"></div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>No</span>
-                <span class="am-modal-btn" data-am-modal-confirm>Yes</span>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(function() {
-            $('[id^=delete]').on('click', function() {
-                $('.am-modal-bd').text('Sure you want to delete it');
-                $('#my-confirm').modal({
-                    relatedTarget: this,
-                    onConfirm: function(options) {
-                        $(this.relatedTarget).parent().submit();
-                    },
-                    onCancel: function() {
-                    }
-                });
-            });
-        });
-    </script>
+    @include('layouts.delete_confirm')
+
     @stop

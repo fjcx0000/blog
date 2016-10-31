@@ -1,11 +1,10 @@
 @extends('layouts.default')
 
 @section('main')
-<div class="am-g am-g-fixed">
-    <div class="am-u-sm-12">
-        <br/>
+
+    <div class="col-sm-12">
         @include('errors.message')
-       <table class="am-table am-table-hover am-table-striped">
+       <table class="table table-hover table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -21,17 +20,17 @@
                     <td>{{ $user->email }}</td>
                     <td>{{{ $user->nickname }}}</td>
                     <td>
-                        <a href="{{ URL::to('user/'.$user->id.'/edit') }}" class="am-btn am-btn-xs am-btn-primary">Edit</a>
+                        <a href="{{ URL::to('user/'.$user->id.'/edit') }}" class="btn btn-primary">Edit</a>
                         {{ Form::open(array('url' => 'user/'.$user->id.'/reset', 'method' => 'PUT',  'style' => 'display:inline;')) }}
-                            <button type="button" class="am-btn am-btn-xs am-btn-warning" id="reset{{ $user->id }}">Reset</button>
+                            <button type="button" class="btn btn-warning" id="reset{{ $user->id }}" data-title="{{ $user->nickname }}">Reset</button>
                         {{ Form::close() }}
                         @if ($user->block)
                         {{ Form::open(array('url' => 'user/'.$user->id.'/unblock', 'method' => 'PUT', 'style' => 'display:inline;')) }}
-                            <button type="button" class="am-btn am-btn-xs am-btn-danger" id="unlock{{ $user->id }}">Unlock</button>
+                            <button type="button" class="btn btn-danger" id="unlock{{ $user->id }}" data-title="{{ $user->nickname }}">Unlock</button>
                         {{ Form::close() }}
                         @else
                         {{ Form::open(array('url' => 'user/'.$user->id, 'method' => 'DELETE', 'style' => 'display:inline;')) }}
-                            <button type="button" class="am-btn am-btn-xs am-btn-danger" id="delete{{ $user->id }}">Block</button>
+                            <button type="button" class="btn btn-danger" id="delete{{ $user->id }}" data-title="{{ $user->nickname }}">Block</button>
                         {{ Form::close() }}
                         @endif
                     </td>
@@ -40,53 +39,66 @@
             </tbody>
         </table>
     </div>
-</div>
 
-<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-    <div class="am-modal-dialog">
-        <div class="am-modal-bd">
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>No</span>
-            <span class="am-modal-btn" data-am-modal-confirm>Yes</span>
+
+    <div class="modal fade" tabindex="-1" id="my-confirm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <!--
+                <div class="modal-body"></div>
+                -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> No</button>
+                    <butoon type="button" class="btn btn-primary" id="confirm-delete"> Yes</butoon>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<script>
-$(function() {
-    $('[id^=reset]').on('click', function() {
-        $('.am-modal-bd').text('Sure you want to reset the password for 123456?');
-        $('#my-confirm').modal({
-            relatedTarget: this,
-            onConfirm: function(options) {
-                $(this.relatedTarget).parent().submit();
-            },
-            onCancel: function() {}
-        });
-    });
+    <script>
+        $(function() {
 
-    $('[id^=delete]').on('click', function() {
-        $('.am-modal-bd').text('Sure you want to lock it?');
-        $('#my-confirm').modal({
-            relatedTarget: this,
-            onConfirm: function(options) {
-                $(this.relatedTarget).parent().submit();
-            },
-                onCancel: function() {}
-        });
-    });
+            $('[id^=delete]').on('click', function() {
+                var recordId;
+                recordId = $(this).attr('id');
+                $('.modal-title').text('Sure you want to delete the record? '+ $(this).attr('data-title'));
 
-    $('[id^=unlock]').on('click', function() {
-        $('.am-modal-bd').text('Sure you want to unlock it?');
-        $('#my-confirm').modal({
-            relatedTarget: this,
-            onConfirm: function(options) {
-                $(this.relatedTarget).parent().submit();
-            },
-            onCancel: function(){}
+                $('#confirm-delete').on('click', function() {
+                    $('#'+recordId).parent('form').submit();
+                });
+                $('#my-confirm').modal({
+                });
+            });
+
+            $('[id^=reset]').on('click', function() {
+                var recordId;
+                recordId = $(this).attr('id');
+                $('.modal-title').text('Sure you want to reset the password for 123456? '+ $(this).attr('data-title'));
+
+                $('#confirm-delete').on('click', function() {
+                    $('#'+recordId).parent('form').submit();
+                });
+                $('#my-confirm').modal({
+                });
+            });
+
+            $('[id^=unlock]').on('click', function() {
+                var recordId;
+                recordId = $(this).attr('id');
+                $('.modal-title').text('Sure you want to unlock it? '+ $(this).attr('data-title'));
+
+                $('#confirm-delete').on('click', function() {
+                    $('#'+recordId).parent('form').submit();
+                });
+                $('#my-confirm').modal({
+                });
+            });
+
         });
-    });
-});
-</script>
+    </script>
+
 @stop
                           

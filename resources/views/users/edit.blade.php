@@ -1,32 +1,36 @@
 @extends('layouts.default')
 
 @section('main')
-<div class="am-g am-g-fixed">
-    <div class="am-u-lg-6 am-u-md-8">
+    <div class="col-lg-6 col-md-8">
         <br/>
         @include('errors.message')
 
-        {{ Form::model($user, array('url' => 'user/'.$user->id, 'method' => 'PUT', 'class' => 'am-form')) }}
-        {{ Form::label('email', 'E-mail:') }}
-        <input id="email" name="email" type="email" readonly="readonly" value="{{ $user->email }}" />
-        <br/>
-        {{Form::label('nickname', 'Nick Name:') }}
-        <input id="nickname" name="nickname" type="text" value="{{{ $user->nickname }}}"/>
-        <br/>
-        {{ Form::label('old_password', 'OldPassword:') }}
-        {{ Form::password('old_password') }}
-        <br/>
-        {{ Form::label('password', 'NewPassword:') }}
-        {{ Form::password('password') }}
-        <br/>
-        {{ Form::label('password_cofirmation', 'ConfirmPassword:') }}
-        {{ Form::password('password_confirmation') }}
-        <br/>
-        <div class="am-cf">
-            {{ Form::submit('Modify', array('class' => 'am-btn am-btn-primary am-btn-sm am-fl')) }}
+        {{ Form::model($user, array('url' => 'user/'.$user->id, 'method' => 'PUT', 'role' => 'form', 'class' => 'form-horizontal')) }}
+        <div class="form-group">
+            {{ Form::label('email', 'E-mail:', array('class' => 'col-sm-4 control-label')) }}
+            <input id="email" name="email" type="email" readonly="readonly" value="{{ $user->email }}" class="form-control col-sm-offset-4 col-sm-8"/>
+        </div>
+        <div class="form-group">
+            {{Form::label('nickname', 'Nick Name:', array('class' => 'col-sm-4 control-label')) }}
+            <input id="nickname" name="nickname" type="text" value="{{{ $user->nickname }}}" class="form-control col-sm-offset-4 col-sm-8"/>
+        </div>
+        <div class="form-group">
+            {{ Form::label('old_password', 'OldPassword:', array('class' => 'col-sm-4 control-label')) }}
+            {{ Form::password('old_password',array('class' => 'form-control col-sm-offset-4 col-sm-8')) }}
+        </div>
+        <div class="form-group">
+            {{ Form::label('password', 'NewPassword:', array('class' => 'col-sm-4 control-label')) }}
+            {{ Form::password('password',array('class' => 'form-control col-sm-offset-4 col-sm-8')) }}
+        </div>
+        <div class="form-group">
+            {{ Form::label('password_cofirmation', 'ConfirmPassword:', array('class' => 'col-sm-4 control-label')) }}
+            {{ Form::password('password_confirmation',array('class' => 'form-control col-sm-offset-4 col-sm-8')) }}
+        </div>
+
+        <div class="form-group">
+            {{ Form::submit('Modify', array('class' => 'btn btn-primary col-sm-offset-4')) }}
         </div>
         {{ Form::close() }}
-        <br/>
+
     </div>
-</div>
 @stop

@@ -1,26 +1,29 @@
 @extends('layouts.default')
 
 @section('main')
-<div class="am-g  am-g-fixed">
-    <div class="am-u-lg-6 am-u-md-8">
+<div class="row">
+    <div class="col-lg-3 col-md-6">
         <br/>
         @include('errors.message')
 
-        <h3> old field {{ Request::old('email') }} </h3>
-        {{ Form::open(array('url' => 'login', 'class' => 'am-form')) }}
+        <h3> Login </h3>
+        {{ Form::open(array('url' => 'login')) }}
+            <div class="form-group">
             {{ Form::label('email', 'E-mail:') }}
-            {{ Form::email('email', Request::old('email')) }}
-            <br/>
+            {{ Form::email('email', Request::old('email'),array('class' => 'form-control')) }}
+            </div>
+            <div class="form-group">
             {{ Form::label('password', 'Password:') }}
             {{ Form::password('password') }}
-            <br/>
+            </div>
+            <div class="form-group">
             <label for="remember_me">
                 <input id="remember_me" name="remember_me" type="checkbox" value="1">
                 Remember Me
             </label>
-            <br/>
-            <div class="am-cf">
-                {{ Form::submit('Login', array('class' => 'am-btn am-btn-primary am-btn-sm am-fl')) }}
+            </div>
+            <div class="form-group">
+                {{ Form::submit('Login', array('class' => 'btn btn-primary')) }}
             </div>
         {{ Form::close() }}
         <br/>

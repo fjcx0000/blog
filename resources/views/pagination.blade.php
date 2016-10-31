@@ -1,3 +1,3 @@
-<ul class="am-pagination am-pagination-centered">
+<ul class="pagination">
     {{ with(new PaginationPresenter($paginator))->render() }}
 </ul>

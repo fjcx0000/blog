@@ -4,69 +4,54 @@
 @extends('layouts.default')
 
 @section('main')
-<div class="am-g am-g-fixed">
-    <div class="am-u-md-8">
+
+    <div class="col-sm-8">
+        <ul>
         @foreach ($articles as $article)
-        <article class="blog-main">
-            <h3 class="am-article-title blog-title">
-                <a href="{{ URL::route('article.show', $article->id) }}">{{ $article->title }}</a>
-            </h3>
-            <h4 class="am-article-meta blog-meta">
+        <li>
+            <div class="article_content">
+                <h3>
+                    <a href="{{ URL::route('article.show', $article->id) }}">{{ $article->title }}</a>
+                </h3>
+            <h4>
                 by <a href="{{ URL::to('user/'.$article->user->id.'/articles') }}">{{ $article->user->nickname }}</a> posted on {{ $article->created_at->format('Y/m/d H:i') }} under
                 @foreach ($article->tags as $tag)
-                <a href="{{ URL::to('tag/'.$tag->id.'/articles') }}" style="color: #fff;" class="am-badge am-badge-success am-radius"> {{ $tag->name }}</a>
+                <a href="{{ URL::to('tag/'.$tag->id.'/articles') }}" style="color: #fff;" class="label label-success label-as-badge"> {{ $tag->name }}</a>
                 @endforeach
             </h4>
-            <div class="am-g">
-                <div class="am-u-sm-12">
-                    @if ($article->summary)
-                    <p>{{ $article->summary }}</p>
-                    @endif
-                    <hr class="am-article-divider"/>
-                </div>
-            </div>
-        </article>
+
+            @if ($article->summary)
+               <p>{{ $article->summary }}</p>
+            @endif
+        </li>
         @endforeach
-    {!! $articles->render() !!}
+        </ul>
+        <div class="text-center">
+            {!! $articles->render() !!}
+        </div>
     </div>
 
-    <div class="am-u-md-4 blog-sidebar">
-        <br/>
-        <div class="am-panel-group">
-            <section class="am-panel am-panel-default">
-                <div class="am-panel-hd"><a href="{{ URL::to('tag/') }}"><span class="am-icon-tags"></span> Tags</a></div>
-                <ul class="am-list">
-{{--
-                    @for ($i = 0, $len = count($tags); $i < $len; $i++)
-                    <li>
-                        <a href="#">{{ $tags[$i]->name }}
-                        @if ($i == 0)
-                        <span class="am-fr am-badge am-badge-danger am-round">{{ $tags[i]->count }}</span>
-                        @elseif ($i == 1)
-                        <span class="am-fr am-badge am-badge-warning am-round">{{ $tags[i]->count }}</span>
-                        @elseif ($i == 2)
-                        <span class="am-fr am-badge am-badge-success am-round">{{ $tags[i]->count }}</span>
-                        @else
-                        <span class="am-fr am-badge am-round">{{ $tags[$i]->count }}</span>
-                        @endif
-                
-                        </a>
-                    </li>
-                    @endfor
---}}
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="{{ URL::to('tag/') }}"><span class="glyphicon glyphicon-tags"></span> Tags</a>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
                     @foreach( $tags as $tag)
-                    <li>
+                    <li class="list-group-item">
                         <a href="{{ URL::to('tag/'.$tag->id.'/articles') }}">{{ $tag->name }}
-                        <span class="am-fr am-badge am-round">{{ $tag->count }}</span>
+                        <span class="badge pull-right">{{ $tag->count }}</span>
                     </li>
                     @endforeach
                 </ul>
+            </div>
             </section>       
         </div>
     </div>
-</div>
 
-<script> {{-- display pagination inline --}}
+{{--
+<script>
 $(function() {
     $('ul.pagination li').css({
         "display" : "inline",
@@ -75,5 +60,5 @@ $(function() {
     });
 });
 </script>
-
+--}}
 @stop

@@ -8,6 +8,8 @@
         <title>@yield('title')</title>
         <link rel="stylesheet" type="text/css" href="{{ URL::to('css/bootstrap.min.css') }}" media="screen"/>
         <link rel="stylesheet" type="text/css" href="{{ URL::to('css/bootstrap-select.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ URL::to('css/custom.css') }}" />
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// --> <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -22,7 +24,7 @@
                 <a href="/">ShiYanLou Blog</a>
             </h1>
             @include('layouts.nav')
-            <div id="content" class="row">
+            <div id="main_content" class="row">
                 @yield('main')
             </div>
             @include('layouts.footer')
