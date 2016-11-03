@@ -15,14 +15,14 @@ use App\Article,App\Tag;
 //use TestService;
 
 Route::get('/', function () {
-    clock()->startEvent('debugEvent', 'LavavelAcademy.org');
-    clock('Message text.');
-    Logger('Message text.');
-    clock(array('hello' => 'world', 'goodby' => 'yesterday'));
+ //   clock()->startEvent('debugEvent', 'LavavelAcademy.org');
+ //   clock('Message text.');
+//    Logger('Message text.');
+//    clock(array('hello' => 'world', 'goodby' => 'yesterday'));
     $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(env('PAGINATION_NUMBER', 2));
     $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
-    clock($tags);
-    clock()->endEvent('debugEvent');
+//    clock($tags);
+//    clock()->endEvent('debugEvent');
     return view('index')->with('articles', $articles)->with('tags', $tags);
 });
 Route::get('login', function() {
@@ -165,6 +165,8 @@ Route::post('article/{id}/preview', 'ArticleController@preview',['middleware' =>
  */
 Route::resource('article', 'ArticleController');
 Route::get('user/{user}/articles', 'UserController@articles');
+Route::post('search', 'ArticleController@search');
+Route::get('search', 'ArticleController@showSearchResult');
 
 /*
  * route for tags
@@ -181,3 +183,4 @@ Route::resource('athome', 'AthomeController');
 Route::get('athome_ajaxtest', function(){
     return view("athome.ajaxtest");
 });
+

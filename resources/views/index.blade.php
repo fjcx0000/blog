@@ -6,6 +6,7 @@
 @section('main')
 
     <div class="col-sm-8">
+        @include('errors.message')
         <ul>
         @foreach ($articles as $article)
         <li>

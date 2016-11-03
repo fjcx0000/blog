@@ -182,7 +182,7 @@ return [
         App\Providers\TestServiceProvider::class,
         MaxHoffmann\Parsedown\ParsedownServiceProvider::class,
         Clockwork\Support\Laravel\ClockworkServiceProvider::class,
-
+        Laravel\Scout\ScoutServiceProvider::class,
     ],
 
     /*

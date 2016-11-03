@@ -10,6 +10,7 @@ use Auth;
 use DB;
 use Markdown;
 use Log;
+use Session;
 
 use App\Http\Requests;
 
@@ -219,5 +220,40 @@ class ArticleController extends Controller
         }
         $article->delete();
         return Redirect::to('home');
+    }
+
+    /**
+     * Search articles through Scout+Algolia
+     */
+    public function search()
+    {
+        $rules = [
+            'keywords' => 'required',
+        ];
+        $validator = Validator::make(Request::all(), $rules);
+        //clock()->startEvent('article.update',"james.yang");
+        //clock(Request::input('tags'));
+        //clock()->endEvent('article.update');
+        if ($validator->passes()) {
+            $keywords = Request::input('keywords');
+            $articles = Article::search($keywords)->paginate(env('PAGINATION_NUMBER', 2));
+            $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
+            return view('index')->with('articles', $articles)->with('tags', $tags);
+
+        } else {
+            return Redirect::to('/')->withInput()->withErrors($validator);
+        }
+    }
+
+    /**
+     * Display search result in pagination
+     */
+    public function showSearchResult()
+    {
+        $keywords = Request::input('query');
+     //   clock("keywords is ".$keywords);
+        $articles = Article::search($keywords)->paginate(env('PAGINATION_NUMBER', 2));
+        $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
+        return view('index')->with('articles', $articles)->with('tags', $tags);
     }
 }

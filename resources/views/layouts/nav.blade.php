@@ -10,6 +10,7 @@
         <a class="navbar-brand" href="{{ URL::to('/') }}">James Blog</a>
     </div>
     <div id="navbar-menu" class="collapse navbar-collapse">
+
         @if (Auth::check())
             <ul class="nav navbar-nav">
                 <li><a href="{{ URL::to('home') }}">Home</a></li>
@@ -45,5 +46,12 @@
                 </li>
             </ul>
         @endif
+        <div>
+            {{ Form::open(array('url' => 'search', 'role' => 'form','class' => 'navbar-form navbar-right')) }}
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="search" name="keywords" id="keywords" value="{{ Request::old('keywords') }}" />
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
     </div>
 </nav>
