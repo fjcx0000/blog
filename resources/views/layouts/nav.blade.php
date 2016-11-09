@@ -52,6 +52,7 @@
                 <input type="text" class="form-control" placeholder="search" name="keywords" id="keywords" value="{{ Request::old('keywords') }}" />
             </div>
             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+            {{ Form::close() }}
         </div>
     </div>
 </nav>
