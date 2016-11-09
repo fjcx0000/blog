@@ -183,6 +183,7 @@ return [
         MaxHoffmann\Parsedown\ParsedownServiceProvider::class,
         Clockwork\Support\Laravel\ClockworkServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -237,7 +238,7 @@ return [
         'TestService' => App\Facades\TestFacade::class,
         'Markdown' => MaxHoffmann\Parsedown\ParsedownFacade::class,
         'Clockwork' => Clockwork\Support\Laravel\Facade::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

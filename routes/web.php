@@ -117,6 +117,11 @@ Route::put('user/{id}', array('before' => 'auth|csrf', function($id)
                 }
             } 
             $user->nickname = Request::get('nickname');
+            if (Request::has('avatarUrl') && !empty(Request::get('avatarUrl'))) {
+                $avatarUrl = Request::get('avatarUrl');
+                $url_array = explode('/', $avatarUrl);
+                $user->avatar = $url_array[count($url_array)-1];
+            }
             $user->save();
             return Redirect::route('user.edit', $id)->with('user', $user)->with('message', array('type' => 'success', 'content' => 'Modify Successfully'));
         } else {
@@ -126,6 +131,12 @@ Route::put('user/{id}', array('before' => 'auth|csrf', function($id)
         return Redirect::to('/');
     }
 }));
+/**
+ * User Avatar operations
+ */
+Route::post('avatar/upload','userController@uploadAvatar');
+Route::post('avatar/crop', 'userController@cropAvatar');
+
 
 Route::group(array('prefix' => 'admin', 'middleware' => array('auth','isAdmin')), function() {
     Route::get('users', function() {
@@ -184,3 +195,7 @@ Route::get('athome_ajaxtest', function(){
     return view("athome.ajaxtest");
 });
 
+/**
+ * Route for comment resource
+ */
+Route::resource('comment', 'CommentController');
