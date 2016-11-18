@@ -137,6 +137,11 @@ Route::put('user/{id}', array('before' => 'auth|csrf', function($id)
 Route::post('avatar/upload','userController@uploadAvatar');
 Route::post('avatar/crop', 'userController@cropAvatar');
 
+/**
+ * Redis operations
+ */
+Route::get('showusers','userController@showUsers');
+
 
 Route::group(array('prefix' => 'admin', 'middleware' => array('auth','isAdmin')), function() {
     Route::get('users', function() {

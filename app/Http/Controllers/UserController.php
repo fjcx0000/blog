@@ -6,6 +6,7 @@ use Intervention\Image\ImageManager;
 use Request,Response,URL;
 use Validator;
 use Image,File;
+use Redis;
 
 use App\User, App\Article;
 
@@ -14,6 +15,25 @@ class UserController extends Controller
     public function articles(User $user)
     {
         return view('home')->with('user', $user)->with('articles', Article::with('tags')->where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->get());
+    }
+
+    /**
+     * Show User List in Redis
+     */
+    public function showUsers()
+    {
+        $redis = Redis::connection('default');
+        $cacheUsers = $redis->get('userlist');
+        if ($cacheUsers) {
+            $users = json_decode($cacheUsers);
+            var_dump($users);
+            return Response::json($users);
+        } else {
+            $users = json_encode(User::all());
+            $redis->set('userlist', $users);
+            var_dump($users);
+            return Response::json($users);
+        }
     }
 
     /**
